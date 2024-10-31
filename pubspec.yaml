@@ -1,0 +1,32 @@
+name: quizzmobileapp
+description: "A new Flutter project."
+publish_to: 'none'  # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"  # Cập nhật để tương thích với phiên bản Dart
+
+dependencies:
+  flutter:
+    sdk: flutter
+  go_router: ^9.0.0
+  expandable_page_view: ^1.0.17
+  flutter_highlighter: ^0.1.1
+  html: ^0.15.4
+  youtube_player_flutter: ^9.1.0
+  http: ^1.1.0
+  provider: ^6.0.5
+  shared_preferences: ^2.0.8
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
