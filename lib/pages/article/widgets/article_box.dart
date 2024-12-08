@@ -30,18 +30,25 @@ class _ArticleBoxState extends State<ArticleBox> {
       future: context.read<QuestionProvider>().getQuestionList(widget.idTopic),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+
+          //Gọi lại list Question và reset thanh Loading
           List<Question> data = snapshot.data as List<Question>;
+          //context.read<QuestionProvider>().setNumberPage(0); // Cập nhật ban đầu
+
           return ExpandablePageView.builder(
+            onPageChanged: (value) {context.read<QuestionProvider>().setNumberPage(value);},
             controller: pageController,
             itemCount: data.length,
             itemBuilder: (BuildContext context, int index) {
               return Container(
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
+
                   color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
                 ),
-                child: SizedBox(
-                  //height: 450, // Chiều cao cụ thể cho ListView
+               
                   child: ListView(
                     shrinkWrap: true, // chiem vua du chieu cao
                     physics: const NeverScrollableScrollPhysics(),
@@ -50,7 +57,7 @@ class _ArticleBoxState extends State<ArticleBox> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          data[index].title ?? 'No Title',
+                          data[index].title .toString(),
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -92,7 +99,6 @@ class _ArticleBoxState extends State<ArticleBox> {
                       Padding(
                         padding: EdgeInsets.all(10),
                         child: TextFormField(
-
                           //Khi nhap vao thi lay gia tri valueInput
                         onChanged: (value) => valueInput = value,
                         decoration: InputDecoration(
@@ -112,9 +118,10 @@ class _ArticleBoxState extends State<ArticleBox> {
                                     // Tạo nút kiểm tra 
                         Padding(
                           padding: EdgeInsets.all(10),
-                          child: ButttonCustom(title: 'Nộp đáp ``',
+                          child: ButttonCustom(title: 'Nộp đáp án',
                            onTap: ()
                           { 
+                                  final input = valueInput.isEmpty ? 'No Answer' : valueInput;
                             // Khi nhấn vào nút kiểm tra thì hiển thị kết quả
                             showAnswer(context, valueInput, data[index]);
                           },
@@ -122,8 +129,8 @@ class _ArticleBoxState extends State<ArticleBox> {
                         ),
                     ],
                   ),
-                ),
-              );
+                );
+              
             },
           );
         } else {

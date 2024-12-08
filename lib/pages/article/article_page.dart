@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quizzmobileapp/apps/utils/const.dart';
 import 'package:quizzmobileapp/pages/article/widgets/article_box.dart';
+import 'package:quizzmobileapp/pages/article/widgets/article_loading.dart';
 import 'package:quizzmobileapp/widgets/background_custom.dart';
 
 
@@ -21,27 +23,28 @@ class ArticlePage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white), // Đổi màu icon nếu cần
           onPressed: () {
-            Navigator.pop(context);
+        context.pop();
           },
         ),
       ),
       body: Stack(
         children: [
-          const BackgroundCustom(),
-          // Center(
-          //   child: ElevatedButton(
-          //     onPressed: () {
-          //       context.goNamed(RoutersName.categoryName);
-          //     },
-          //     child: const Text('Go to Category Page'),
-          //   ),
-          // ),
+        Container(
+      width: double.infinity,
+      height: double.infinity,
+      child: BackgroundCustom(),
+    ),
           SafeArea(child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),  
-            child: Column(
-              children: [
-                ArticleBox(idTopic: idTopic),
-              ],
+            padding: EdgeInsets.symmetric(horizontal: paddingCustom(context)),  
+            child: SingleChildScrollView (
+              child: Column(
+                children: [
+                  // SizedBox(height: getHeight(context)*0.05),
+                   const ArticleLoading(),
+                   SizedBox(height: getHeight(context)*0.05),
+                  ArticleBox(idTopic: idTopic),
+                ],
+              ),
             ))) 
         ],
       ),

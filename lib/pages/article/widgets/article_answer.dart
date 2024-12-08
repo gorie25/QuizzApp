@@ -9,7 +9,7 @@ Future<void> showAnswer(
   return showModalBottomSheet(
     context: context,
     builder: (context) => FractionallySizedBox(
-      heightFactor: 0.8,
+      heightFactor: 1.5,
       child: Container(
         width: getWidth(context),
         decoration: const BoxDecoration(
@@ -19,20 +19,26 @@ Future<void> showAnswer(
           ),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Add RichText widget to display whether the answer is correct or incorrect
             Padding(
               padding: const EdgeInsets.all(8.0),
-
               child: RichText(
+                textAlign:
+                    TextAlign.center, // Căn giữa toàn bộ nội dung RichText
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: valueInput != data.answer
-                          ? 'Đáp án của bạn là đáp án sai, đáp án đúng là: '
-                          : 'Đáp án của bạn là đáp án chính xác',
+                      text: 'Đáp án của bạn là ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: valueInput != data.answer ? 'Sai' : 'chính xác',
                       style: TextStyle(
                         color: valueInput == data.answer
                             ? Colors.green
@@ -41,28 +47,46 @@ Future<void> showAnswer(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-        
-                    TextSpan(
-                      text: data.answer,
-                      style: const TextStyle(
+                    if (valueInput != data.answer) ...[
+                      TextSpan(
+                        text: ', đáp án đúng là: ',
+                        style: TextStyle(
                           color: Colors.black,
                           fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                    ),
-                                TextSpan(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                   TextSpan(
+                          text:
+                              '\n\n'), 
+                      TextSpan(
+                          text:
+                              '\t\t\t\t'), // Thêm khoảng trống tùy chọn nếu cần
+                      TextSpan(
+                        text: data.answer,
+                        style: const TextStyle(
+                          color: Colors.green,
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                    TextSpan(
                       text: '\n\n\n', // Khoảng trống xuống dòng
                     ),
                     TextSpan(
                       text: 'Xem video giải thích ở bên dưới',
                       style: const TextStyle(
-                          color: Color.fromARGB(255, 246, 4, 4),
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
+                        color: Color.fromARGB(255, 246, 4, 4),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
+
             // Display the video explanation using ArticleYoutube
             ArticleYoutube(id: data.youtube_id_result),
           ],
